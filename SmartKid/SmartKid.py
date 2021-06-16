@@ -49,35 +49,6 @@ plt.ylabel(np.argmax(model.predict(X_test)[1255]))
 
 model.save('digit_trained.h5')
 
-##### open cv for capture and predicting through camera #####
-
-##### cv2
-
-'''
-cap = cv2.VideoCapture(0)
-while True:
-    ret, img = cap.read()
-    #img = cv2.flip(img, 1)
-    img = img[200:400, 200:400]
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    _, gray = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY_INV)
-    cv2.imshow("gray_wind", gray)
-    gray = cv2.resize(gray, (28, 28))
-    #cv2.imshow('resized')
-    gray = gray.reshape(1, 784)
-    result = np.argmax(model.predict(gray))
-    result = 'cnn : {}'.format(result)
-    cv2.putText(img, org=(25,25), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, text= result, color=(255,0,0), thickness=1)
-    cv2.imshow("image", img)
-
-    if cv2.waitKey(1) == 13:
-        break
-
-cap.release()
-cv2.destroyAllWindows()
-#plt.imshow(img)
-
-'''
 ############  prediction via paints ##########
 ### glob
 run = False
@@ -86,7 +57,7 @@ follow = 25
 img = np.zeros((512, 512, 1))
 
 
-### func
+### function to draw
 def draw(event, x, y, flag, params):
     global run, ix, iy, img, follow
     if event == cv2.EVENT_LBUTTONDOWN:
@@ -111,7 +82,7 @@ def draw(event, x, y, flag, params):
         follow = 25
 
 
-### param
+### draw
 cv2.namedWindow('image')
 cv2.setMouseCallback('image', draw)
 
